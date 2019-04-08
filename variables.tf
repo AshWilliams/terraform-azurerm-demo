@@ -3,11 +3,11 @@ variable "location" {
 }
 
 variable "resource_group_name" {
-  default = "tfaz-rg"
+  default = "sqm-rg"
 }
 
 variable "sg_name" {
-  default = "tfaz-nsg"
+  default = "sqm-nsg"
 }
 
 # This is the default variable set in the network module. I left this commented
@@ -22,7 +22,7 @@ variable "subnet_prefixes" {
 }
 
 variable "subnet_names" {
-  default = ["tfaz-public-subnet", "tfaz-private-subnet"]
+  default = ["sqm-public-subnet", "sqm-private-subnet"]
 }
 
 variable "client_id" {

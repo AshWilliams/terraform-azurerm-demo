@@ -1,4 +1,6 @@
+#SQM Terraform Demo
 provider "azurerm" {
+  version = "=1.7.0"
   subscription_id = "${var.subscription_id}"
   client_id       = "${var.client_id}"
   client_secret   = "${var.client_secret}"
@@ -13,7 +15,6 @@ resource "azurerm_resource_group" "default" {
     environment = "dev"
   }
 }
-
 module "network" "demo-network" {
   source              = "github.com/nicholasjackson/terraform-azurerm-network"
   location            = "${var.location}"
@@ -55,46 +56,4 @@ module "computegroup" "demo-web" {
   admin_username = "azureuser"
   admin_password = "BestPasswordEver"
   ssh_key        = "${var.ssh_key_public}"
-}
-
-resource "azurerm_network_security_rule" "allowInternet80" {
-  name                        = "allow-internet-port-80"
-  direction                   = "Inbound"
-  access                      = "Allow"
-  priority                    = 200
-  source_address_prefix       = "*"
-  source_port_range           = "*"
-  destination_address_prefix  = "*"
-  destination_port_range      = "80"
-  protocol                    = "Tcp"
-  resource_group_name         = "${azurerm_resource_group.default.name}"
-  network_security_group_name = "${module.network.security_group_name}"
-}
-
-resource "azurerm_network_security_rule" "allowInternet3000" {
-  name                        = "allow-internet-port-3000"
-  direction                   = "Inbound"
-  access                      = "Allow"
-  priority                    = 205
-  source_address_prefix       = "*"
-  source_port_range           = "*"
-  destination_address_prefix  = "*"
-  destination_port_range      = "3000"
-  protocol                    = "Tcp"
-  resource_group_name         = "${azurerm_resource_group.default.name}"
-  network_security_group_name = "${module.network.security_group_name}"
-}
-
-resource "azurerm_network_security_rule" "allowJumpboxSSH" {
-  name                        = "allow-jumpbox-ssh"
-  direction                   = "Inbound"
-  access                      = "Allow"
-  priority                    = 210
-  source_address_prefix       = "*"
-  source_port_range           = "*"
-  destination_address_prefix  = "${azurerm_network_interface.jumpbox.private_ip_address}"
-  destination_port_range      = "22"
-  protocol                    = "Tcp"
-  resource_group_name         = "${azurerm_resource_group.default.name}"
-  network_security_group_name = "${module.network.security_group_name}"
 }
