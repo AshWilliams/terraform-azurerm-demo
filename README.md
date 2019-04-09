@@ -1,4 +1,4 @@
-# terraform-azurerm-demo
+# terraform-azurerm-demo SQM
 
 This is a simple Terraform AzureRM provider demo. In it's default state, this demo will use a mixture of modules from the [Terraform Module Registry for Azure](http://registry.terraform.io/browse?provider=azurerm&verified=true) and custom Terraform code to deploy a demo application with a publicly accessible frontend IP that consists of:
 
